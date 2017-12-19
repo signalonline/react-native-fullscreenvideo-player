@@ -103,6 +103,7 @@ export default class VideoPlayer extends Component {
 
     this.onLayout = this.onLayout.bind(this);
     this.onStartPress = this.onStartPress.bind(this);
+    this.onPaused = this.onPaused.bind(this);
     this.onProgress = this.onProgress.bind(this);
     this.onEnd = this.onEnd.bind(this);
     this.onLoad = this.onLoad.bind(this);
@@ -136,11 +137,24 @@ export default class VideoPlayer extends Component {
     });
   }
 
-  onStartPress() {
+  onPaused() {
+    console.log('paused')
+
+    this.setState({
+      isPlaying: false,
+      isStarted: false,
+    });
+  }
+
+  onStartPress(event) {
     this.setState({
       isPlaying: true,
       isStarted: true,
     });
+
+    if (this.props.onStart) {
+      this.props.onStart(event);
+    }
 
     this.hideControls();
   }
